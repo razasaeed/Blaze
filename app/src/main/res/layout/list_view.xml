@@ -1,0 +1,370 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/file_list_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.example.blazedocumentreader.fileviewer.FileViewerActivity"
+    tools:showIn="@layout/app_bar_nav">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?android:attr/listDivider" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.gridlayout.widget.GridLayout
+            android:id="@+id/home_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:columnCount="2"
+            tools:showIn="@layout/activity_file_viewer">
+
+<!--            <Button-->
+<!--                android:id="@+id/btn_image_files"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:background="@android:drawable/dialog_holo_light_frame"-->
+<!--                android:drawableStart="@drawable/file_image"-->
+<!--                android:drawablePadding="10dp"-->
+<!--                android:padding="20dp"-->
+<!--                android:singleLine="true"-->
+<!--                android:text="Pictures"-->
+<!--                android:textAlignment="textStart"-->
+<!--                android:textAllCaps="false"-->
+<!--                app:layout_columnWeight="1" />-->
+
+<!--            <Button-->
+<!--                android:id="@+id/btn_music_files"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:background="@android:drawable/dialog_holo_light_frame"-->
+<!--                android:drawableLeft="@drawable/file_music"-->
+<!--                android:drawablePadding="10dp"-->
+<!--                android:padding="20dp"-->
+<!--                android:singleLine="true"-->
+<!--                android:text="Music"-->
+<!--                android:textAlignment="textStart"-->
+<!--                android:textAllCaps="false"-->
+<!--                app:layout_columnWeight="1" />-->
+
+<!--            <Button-->
+<!--                android:id="@+id/btn_video_files"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:background="@android:drawable/dialog_holo_light_frame"-->
+<!--                android:drawableLeft="@drawable/file_video"-->
+<!--                android:drawablePadding="10dp"-->
+<!--                android:padding="20dp"-->
+<!--                android:singleLine="true"-->
+<!--                android:text="Videos"-->
+<!--                android:textAlignment="textStart"-->
+<!--                android:textAllCaps="false"-->
+<!--                app:layout_columnWeight="1" />-->
+
+            <LinearLayout
+                android:layout_height="match_parent"
+                android:background="@android:drawable/dialog_holo_light_frame"
+                android:orientation="horizontal"
+                app:layout_columnWeight="1">
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="20dp"
+                    android:src="@drawable/file_doc"/>
+
+                <TextView
+                    android:id="@+id/btn_document_files"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="7"
+                    android:gravity="center_vertical"
+                    android:paddingTop="20dp"
+                    android:paddingBottom="20dp"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="0dp"
+                    android:textColor="@android:color/black"
+                    android:text="Documents"
+                    android:textAllCaps="false"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_height="match_parent"
+                android:background="@android:drawable/dialog_holo_light_frame"
+                android:orientation="horizontal"
+                app:layout_columnWeight="1">
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="20dp"
+                    android:src="@drawable/pdf"/>
+
+                <TextView
+                    android:id="@+id/btn_document_files_pdf"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="7"
+                    android:gravity="center_vertical"
+                    android:paddingTop="20dp"
+                    android:paddingBottom="20dp"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="0dp"
+                    android:textColor="@android:color/black"
+                    android:text="Pdf"
+                    android:textAllCaps="false"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_height="match_parent"
+                android:background="@android:drawable/dialog_holo_light_frame"
+                android:orientation="horizontal"
+                app:layout_columnWeight="1">
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="20dp"
+                    android:src="@drawable/word"/>
+
+                <TextView
+                    android:id="@+id/btn_document_files_doc"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="7"
+                    android:gravity="center_vertical"
+                    android:paddingTop="20dp"
+                    android:paddingBottom="20dp"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="0dp"
+                    android:textColor="@android:color/black"
+                    android:text="Word"
+                    android:textAllCaps="false"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_height="match_parent"
+                android:background="@android:drawable/dialog_holo_light_frame"
+                android:orientation="horizontal"
+                app:layout_columnWeight="1">
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="20dp"
+                    android:src="@drawable/excel"/>
+
+                <TextView
+                    android:id="@+id/btn_document_files_xls"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="7"
+                    android:gravity="center_vertical"
+                    android:paddingTop="20dp"
+                    android:paddingBottom="20dp"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="0dp"
+                    android:textColor="@android:color/black"
+                    android:text="Excel"
+                    android:textAllCaps="false"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_height="match_parent"
+                android:background="@android:drawable/dialog_holo_light_frame"
+                android:orientation="horizontal"
+                app:layout_columnWeight="1">
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="20dp"
+                    android:src="@drawable/powerpoint"/>
+
+                <TextView
+                    android:id="@+id/btn_document_files_ppt"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="7"
+                    android:gravity="center_vertical"
+                    android:paddingTop="20dp"
+                    android:paddingBottom="20dp"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="0dp"
+                    android:textColor="@android:color/black"
+                    android:text="Power Point"
+                    android:textAllCaps="false"/>
+
+            </LinearLayout>
+
+<!--            <Button-->
+<!--                android:id="@+id/btn_apps"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:background="@android:drawable/dialog_holo_light_frame"-->
+<!--                android:drawableLeft="@drawable/file_apk"-->
+<!--                android:drawablePadding="10dp"-->
+<!--                android:padding="20dp"-->
+<!--                android:singleLine="true"-->
+<!--                android:text="Apps"-->
+<!--                android:textAlignment="textStart"-->
+<!--                android:textAllCaps="false"-->
+<!--                app:layout_columnWeight="1" />-->
+
+            <LinearLayout
+                android:layout_height="match_parent"
+                android:background="@android:drawable/dialog_holo_light_frame"
+                android:orientation="horizontal"
+                app:layout_columnWeight="1">
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="20dp"
+                    android:src="@drawable/file_default"/>
+
+                <TextView
+                    android:id="@+id/btn_text_files"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="7"
+                    android:gravity="center_vertical"
+                    android:paddingTop="20dp"
+                    android:paddingBottom="20dp"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="0dp"
+                    android:textColor="@android:color/black"
+                    android:text="Text files"
+                    android:textAllCaps="false"/>
+
+            </LinearLayout>
+
+<!--            <Button-->
+<!--                android:id="@+id/btn_archive_files"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:background="@android:drawable/dialog_holo_light_frame"-->
+<!--                android:drawableLeft="@drawable/file_archive"-->
+<!--                android:drawablePadding="10dp"-->
+<!--                android:padding="20dp"-->
+<!--                android:singleLine="true"-->
+<!--                android:text="Archives"-->
+<!--                android:textAlignment="textStart"-->
+<!--                android:textAllCaps="false"-->
+<!--                app:layout_columnWeight="1" />-->
+
+<!--            <Button-->
+<!--                android:id="@+id/btn_camera_folder"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:background="@android:drawable/dialog_holo_light_frame"-->
+<!--                android:drawableLeft="@android:drawable/ic_menu_camera"-->
+<!--                android:drawablePadding="10dp"-->
+<!--                android:padding="20dp"-->
+<!--                android:singleLine="true"-->
+<!--                android:text="Camera"-->
+<!--                android:textAlignment="textStart"-->
+<!--                android:textAllCaps="false"-->
+<!--                app:layout_columnWeight="1" />-->
+
+<!--            <Button-->
+<!--                android:id="@+id/btn_downloads_folder"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:background="@android:drawable/dialog_holo_light_frame"-->
+<!--                android:drawableLeft="@drawable/downloads"-->
+<!--                android:drawablePadding="10dp"-->
+<!--                android:padding="20dp"-->
+<!--                android:singleLine="true"-->
+<!--                android:text="Downloads"-->
+<!--                android:textAlignment="textStart"-->
+<!--                android:textAllCaps="false"-->
+<!--                app:layout_columnWeight="1" />-->
+
+            <LinearLayout
+                android:layout_height="match_parent"
+                android:background="@android:drawable/dialog_holo_light_frame"
+                android:orientation="horizontal"
+                app:layout_columnWeight="1">
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="20dp"
+                    android:src="@android:drawable/btn_star_big_on"/>
+
+                <TextView
+                    android:id="@+id/btn_favourites_view"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="7"
+                    android:gravity="center_vertical"
+                    android:paddingTop="20dp"
+                    android:paddingBottom="20dp"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="0dp"
+                    android:textColor="@android:color/black"
+                    android:text="Favourites"
+                    android:textAllCaps="false"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_height="match_parent"
+                android:background="@android:drawable/dialog_holo_light_frame"
+                android:orientation="horizontal"
+                app:layout_columnWeight="1">
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="20dp"
+                    android:src="@android:drawable/ic_menu_recent_history"/>
+
+                <TextView
+                    android:id="@+id/btn_recents_view"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="7"
+                    android:gravity="center_vertical"
+                    android:paddingTop="20dp"
+                    android:paddingBottom="20dp"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="0dp"
+                    android:textColor="@android:color/black"
+                    android:text="Recent Items"
+                    android:textAllCaps="false"/>
+
+            </LinearLayout>
+
+        </androidx.gridlayout.widget.GridLayout>
+    </ScrollView>
+
+    <ListView
+        android:id="@+id/list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:animationCache="false"
+        android:scrollingCache="false"
+        android:smoothScrollbar="true" />
+
+    <TextView
+        android:id="@+id/empty"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="No Items"
+        android:textSize="25dp" />
+</LinearLayout>

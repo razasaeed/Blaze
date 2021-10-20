@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">Blaze Document Reader</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <!-- FileViewer Colors Start -->
+    <string-array name="sort_criteria">
+        <item>File Name</item>
+        <item>Date Modified</item>
+        <item>File Size</item>
+    </string-array>
+    <string-array name="sort_mode">
+        <item>Ascending</item>
+        <item>Descending</item>
+    </string-array>
+
+    <string name="pdf_documents">PDF Documents</string>
+    <string name="word_documents">Word Documents</string>
+    <string name="xls_documents">XLS Documents</string>
+    <string name="powerpoint_documents">PowerPoint Documents</string>
+
+    <!-- FileViewer Colors End -->
+
+</resources>

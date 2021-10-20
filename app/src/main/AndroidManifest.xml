@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.blazedocumentreader">
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <application
+        android:allowBackup="true"
+        android:hardwareAccelerated="true"
+        android:icon="@mipmap/ic_launcher"
+        android:installLocation="preferExternal"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+<!--        android:theme="@style/Theme.BlazeDocumentReader">-->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths" />
+        </provider>
+
+        <activity
+            android:name=".fileviewer.FileViewerActivity"
+            android:alwaysRetainTaskState="true"
+            android:hardwareAccelerated="true"
+            android:icon="@mipmap/ic_launcher"
+            android:label="@string/app_name">
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <intent-filter>
+                <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.OPENABLE" />
+
+                <action android:name="android.intent.action.VIEW" />
+                <action android:name="android.intent.action.OPEN_DOCUMENT" />
+                <action android:name="android.intent.action.QUICK_VIEW" />
+                <action android:name="android.intent.action.RUN" />
+
+                <data android:scheme="content" />
+                <data android:scheme="file" />
+                <data android:scheme="http" />
+                <data android:scheme="https" />
+                <!-- PDF -->
+                <data android:mimeType="application/pdf" />
+                <!-- Zip -->
+                <data android:mimeType="application/zip" />
+                <!-- SQLite -->
+                <data android:mimeType="application/x-sqlite3" />
+                <!-- Audio -->
+                <data android:mimeType="audio/*" />
+                <data android:mimeType="application/ogg" />
+                <data android:mimeType="application/x-ogg" />
+                <!-- Images -->
+                <data android:mimeType="image/*" />
+                <!-- Videos -->
+                <data android:mimeType="video/*" />
+                <!-- Text -->
+                <data android:mimeType="text/*" />
+            </intent-filter>
+            <intent-filter>
+                <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.OPENABLE" />
+
+                <action android:name="android.intent.action.VIEW" />
+                <action android:name="android.intent.action.OPEN_DOCUMENT" />
+                <action android:name="android.intent.action.QUICK_VIEW" />
+                <action android:name="android.intent.action.RUN" />
+
+                <data android:scheme="content" />
+                <data android:scheme="file" />
+                <data android:scheme="http" />
+                <data android:scheme="https" />
+                <data android:host="*" />
+                <!-- PDF -->
+                <data android:pathPattern=".*\\.pdf" />
+                <!-- SQLite -->
+                <data android:pathPattern=".*\\.sqlite" />
+                <!-- Zip -->
+                <data android:pathPattern=".*\\.zip" />
+                <!-- Audio -->
+                <data android:pathPattern=".*\\.mp3" />
+                <data android:pathPattern=".*\\.oog" />
+                <data android:pathPattern=".*\\.wav" />
+                <data android:pathPattern=".*\\.mid" />
+                <data android:pathPattern=".*\\.m4a" />
+                <data android:pathPattern=".*\\.amr" />
+                <!-- Images -->
+                <data android:pathPattern=".*\\.png" />
+                <data android:pathPattern=".*\\.jpg" />
+                <data android:pathPattern=".*\\.gif" />
+                <data android:pathPattern=".*\\.bmp" />
+                <data android:pathPattern=".*\\.jpeg" />
+                <data android:pathPattern=".*\\.webp" />
+                <data android:pathPattern=".*\\.svg" />
+                <!-- Videos -->
+                <data android:pathPattern=".*\\.mp4" />
+                <data android:pathPattern=".*\\.3gp" />
+                <data android:pathPattern=".*\\.mkv" />
+                <data android:pathPattern=".*\\.webm" />
+                <data android:pathPattern=".*\\.m3u8" />
+                <data android:pathPattern=".*\\.m3u" />
+                <!-- Documents -->
+                <data android:pathPattern=".*\\.odt" />
+                <data android:pathPattern=".*\\.ott" />
+                <data android:pathPattern=".*\\.odp" />
+                <data android:pathPattern=".*\\.otp" />
+                <data android:pathPattern=".*\\.ods" />
+                <data android:pathPattern=".*\\.ots" />
+                <data android:pathPattern=".*\\.fodt" />
+                <data android:pathPattern=".*\\.fods" />
+                <data android:pathPattern=".*\\.fodp" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".SplashActivity">
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
+        </activity>
+        <activity android:name=".MainActivity" />
+    </application>
+
+</manifest>

@@ -4,6 +4,7 @@ import static android.os.Build.VERSION.SDK_INT;
 
 import static com.example.blazedocumentreader.fileviewer.Util.getSDCard;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
@@ -13,6 +14,8 @@ import androidx.core.view.GravityCompat;
 import androidx.core.view.MenuItemCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.gridlayout.widget.GridLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
 import android.app.AlertDialog;
@@ -93,10 +96,9 @@ public class FileViewerActivity extends AppCompatActivity
         SearchView.OnQueryTextListener {
     private static boolean mBusy = false, recentsView = false, favouritesView = false, homeView = true;
     private static final int REQUEST_ID_MULTIPLE_PERMISSIONS = 1, SDCARD_WRITE_PERMISSION_REQUEST_CODE = 100;
-    private static ViewHolder holder;
     private Toolbar toolbar;
     private DrawerLayout drawer;
-    private ListView lv;
+    private RecyclerView lv;
     private GridLayout homeViewLayout;
     private File file, files[], origFiles[];
     private RecentFilesStack recent;
@@ -170,6 +172,7 @@ public class FileViewerActivity extends AppCompatActivity
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         lv = findViewById(R.id.list);
+        lv.setLayoutManager(new LinearLayoutManager(this));
         registerForContextMenu(lv);
 
         getPrefs();
@@ -185,13 +188,6 @@ public class FileViewerActivity extends AppCompatActivity
             e.printStackTrace();
         }
 
-        lv.setEmptyView(findViewById(R.id.empty));
-        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                openFile(files[i]);
-            }
-        });
         homeViewLayout = findViewById(R.id.home_view);
         homeViewLayout.findViewById(R.id.btn_document_files).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -1342,17 +1338,11 @@ public class FileViewerActivity extends AppCompatActivity
         lv.setVisibility(View.GONE);
     }
 
-    private static class ViewHolder {
-        private TextView name;
-        private TextView date;
-        private TextView details;
-        private ImageView icon;
-        private ImageView bookmark;
-    }
+    class EfficientAdapter extends RecyclerView.Adapter<EfficientAdapter.MyAdapter> implements Filterable {
 
-    class EfficientAdapter extends BaseAdapter implements Filterable {
         private LayoutInflater mInflater;
         private Context mContext;
+        private LayoutInflater inflater;
 
         public EfficientAdapter(Context context) {
             // Cache the LayoutInflate to avoid asking for a new one each time.
@@ -1360,38 +1350,18 @@ public class FileViewerActivity extends AppCompatActivity
             mContext = context;
         }
 
+        @NonNull
         @Override
-        public int getCount() {
-            return files != null ? files.length : 0;
-        }
-
-        @Override
-        public Object getItem(int i) {
-            return files[i];
-        }
-
-        @Override
-        public long getItemId(int i) {
-            return files[i].hashCode();
-        }
-
-        public View getView(int position, View view, ViewGroup parent) {
-            // A ViewHolder keeps references to child views to avoid unneccessary calls to findViewById() on each row.
-            // When view is not null, reuse it directly, no need to reinflate it.
-            if (view == null) {
-                // Creates a ViewHolder and store references to the child views we want to bind data to.
-                view = mInflater.inflate(R.layout.list_item, parent, false);
-                holder = new ViewHolder();
-                holder.name = view.findViewById(R.id.name);
-                holder.date = view.findViewById(R.id.date);
-                holder.details = view.findViewById(R.id.details);
-                holder.icon = view.findViewById(R.id.icon);
-                holder.bookmark = view.findViewById(R.id.bookmark);
-                view.setTag(holder);
-            } else {
-                // Get the ViewHolder back to get fast access to the child views
-                holder = (ViewHolder) view.getTag();
+        public MyAdapter onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            if (inflater == null) {
+                inflater = LayoutInflater.from(parent.getContext());
             }
+            View view = inflater.inflate(R.layout.list_item, parent, false);
+            return new MyAdapter(view);
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull MyAdapter holder, int position) {
             File current_file = files[position];
             holder.name.setText(current_file.getName());
             SimpleDateFormat format = new SimpleDateFormat("dd-MMM-yyyy hh:mm:ss a");
@@ -1421,9 +1391,6 @@ public class FileViewerActivity extends AppCompatActivity
                     } else if ("pdf".equals(ext)) {
                         holder.icon.setImageResource(R.drawable.pdf);
                     }
-//                    if (Util.image_ext.contains(ext) || Util.video_ext.contains(ext)) {
-//                        Glide.with(getApplicationContext()).load(Uri.fromFile(current_file)).placeholder(R.drawable.loading).into(holder.icon);
-//                    }
                     else {
                         holder.icon.setImageResource(R.drawable.file_default);
                     }
@@ -1434,33 +1401,27 @@ public class FileViewerActivity extends AppCompatActivity
                 holder.icon.setImageResource(R.drawable.loading);
             }
 
-            holder.bookmark.setOnClickListener(new View.OnClickListener() {
+            String type = "";
+            String ext = Util.extension(files[position].getName());
+            if (Util.doc_ext.contains(ext)) {
+                type = "word";
+            } else if (Util.xl_ext.contains(ext)) {
+                type = "excel";
+            } else if (Util.ppt_ext.contains(ext)) {
+                type = "ppt";
+            } else if ("pdf".equals(ext)) {
+                type = "pdf";
+            } else {
+                type = "default";
+            }
+            if (dbManager.getFavourites(files[position].getName(), type).size()==0){
+                holder.bookmark.setImageResource(R.drawable.ic_favorite_red);
+            }
+        }
 
-                @Override
-                public void onClick(View v) {
-                    Toast.makeText(mContext, "On/Off Bookmark Using SqliteDatabase: " + position, Toast.LENGTH_SHORT).show();
-                    String type = "";
-                    String ext = Util.extension(current_file.getName());
-                    if (Util.doc_ext.contains(ext)) {
-                        type = "word";
-                    } else if (Util.xl_ext.contains(ext)) {
-                        type = "excel";
-                    } else if (Util.ppt_ext.contains(ext)) {
-                        type = "ppt";
-                    } else if ("pdf".equals(ext)) {
-                        type = "pdf";
-                    } else {
-                        type = "default";
-                    }
-                    String name = current_file.getName();
-
-                    dbManager.addFav(type, name);
-                    Toast.makeText(mContext, "sizeis: "+dbManager.getFavourites(name, type).size()+"", Toast.LENGTH_SHORT).show();
-
-                }
-            });
-
-            return view;
+        @Override
+        public int getItemCount() {
+            return files != null ? files.length : 0;
         }
 
         @Override
@@ -1469,6 +1430,58 @@ public class FileViewerActivity extends AppCompatActivity
                 fileFilter = new FileFilter();
             }
             return fileFilter;
+        }
+
+        public class MyAdapter extends RecyclerView.ViewHolder {
+            private TextView name;
+            private TextView date;
+            private TextView details;
+            private ImageView icon;
+            private ImageView bookmark;
+
+            public MyAdapter(@NonNull View itemView) {
+                super(itemView);
+                name = itemView.findViewById(R.id.name);
+                date = itemView.findViewById(R.id.date);
+                details = itemView.findViewById(R.id.details);
+                icon = itemView.findViewById(R.id.icon);
+                bookmark = itemView.findViewById(R.id.bookmark);
+
+                itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        openFile(files[getAdapterPosition()]);
+                    }
+                });
+
+                bookmark.setOnClickListener(new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View v) {
+                        String type = "";
+                        String ext = Util.extension(files[getAdapterPosition()].getName());
+                        if (Util.doc_ext.contains(ext)) {
+                            type = "word";
+                        } else if (Util.xl_ext.contains(ext)) {
+                            type = "excel";
+                        } else if (Util.ppt_ext.contains(ext)) {
+                            type = "ppt";
+                        } else if ("pdf".equals(ext)) {
+                            type = "pdf";
+                        } else {
+                            type = "default";
+                        }
+                        if (dbManager.getFavourites(files[getAdapterPosition()].getName(), type).size()==0){
+                            bookmark.setImageResource(R.drawable.ic_favorite_red);
+                        }
+                        String name = files[getAdapterPosition()].getName();
+
+                        dbManager.addFav(type, name);
+                        Toast.makeText(mContext, "sizeis: " + dbManager.getFavourites(name, type).size() + "", Toast.LENGTH_SHORT).show();
+
+                    }
+                });
+            }
         }
     }
 
